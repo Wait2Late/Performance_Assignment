@@ -1,2 +1,2 @@
 # Performance_Assignment
- Assignemnt for Computer Technology course
+ Assignment for Computer Technology course
