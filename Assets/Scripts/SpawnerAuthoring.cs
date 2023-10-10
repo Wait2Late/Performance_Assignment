@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Unity.Entities;
+using Unity.Mathematics;
 
 public class SpawnerAuthoring : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject Prefab;
+    public Transform SpawnPosition;
+    public float NextSpawnTime;
+    public float SpawnRate;
+}
 
-    // Update is called once per frame
-    void Update()
+class SpawnerBaker : Baker<SpawnerAuthoring>
+{
+    public override void Bake(SpawnerAuthoring authoring)
     {
-        
+        var entity = GetEntity(TransformUsageFlags.None);
+        AddComponent(entity, new Spawner
+        {
+            // By default, each authoring GameObject turns into an Entity.
+            // Given a GameObject (or authoring component), GetEntity looks up the resulting Entity.
+            Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic),
+            // SpawnPosition = authoring.transform.position,
+            SpawnPosition = authoring.SpawnPosition.position,
+            // NextSpawnTime = 0.0f,
+            NextSpawnTime = authoring.NextSpawnTime,
+            SpawnRate = authoring.SpawnRate
+        });
     }
 }
