@@ -92,8 +92,10 @@ public partial struct ProcessSpawnerJob : IJobEntity
             
             Ecb.SetComponent(chunkIndex, newEntity, LocalTransform.FromPosition(spawner.SpawnPosition));
             
+            
             // Resets the next spawn time.
             spawner.NextSpawnTime = (float)ElapsedTime + spawner.SpawnRate;
+            
         }
     }
 }
