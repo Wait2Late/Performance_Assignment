@@ -1,6 +1,9 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 
 public class SpawnerAuthoring : MonoBehaviour
 {
@@ -8,6 +11,26 @@ public class SpawnerAuthoring : MonoBehaviour
     public Transform SpawnPosition;
     public float NextSpawnTime;
     public float SpawnRate;
+
+    private void Awake()
+    {
+        
+    }
+
+    private LocalTransform GetRandomLocations(float3 centerPosition)
+    {
+        
+        float randomAngle = Random.Range(0f, 360f);
+        float3 spawnDirection = Quaternion.Euler(0, randomAngle, 0) * Vector3.forward;
+        float radius = 25.0f;
+        
+        float3 randomLocation = centerPosition + radius * spawnDirection;
+        
+        LocalTransform SpawnPosition = LocalTransform.FromPosition(randomLocation);
+        
+        return SpawnPosition;
+
+    }
 }
 
 class SpawnerBaker : Baker<SpawnerAuthoring>

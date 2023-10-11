@@ -37,11 +37,15 @@
 //     }
 // }
 
+using System;
+using System.Security.Cryptography;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Burst;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [BurstCompile]
 public partial struct OptimizedSpawnerSystem : ISystem
@@ -89,7 +93,9 @@ public partial struct ProcessSpawnerJob : IJobEntity
         {
             // Spawns a new entity and positions it at the spawner.
             Entity newEntity = Ecb.Instantiate(chunkIndex, spawner.Prefab);
-            
+
+            // LocalTransform centerPosition = GetRandomLocations(spawner.SpawnPosition);
+            // Ecb.SetComponent(chunkIndex, newEntity, LocalTransform.FromPosition(spawner.SpawnPosition));
             Ecb.SetComponent(chunkIndex, newEntity, LocalTransform.FromPosition(spawner.SpawnPosition));
             
             
@@ -97,5 +103,19 @@ public partial struct ProcessSpawnerJob : IJobEntity
             spawner.NextSpawnTime = (float)ElapsedTime + spawner.SpawnRate;
             
         }
+    }
+
+    private LocalTransform GetRandomLocations(float3 centerPosition)
+    {
+        float randomAngle = Random.Range(0f, 360f);
+        float3 spawnDirection = Quaternion.Euler(0, randomAngle, 0) * Vector3.forward;
+        float radius = 25.0f;
+        
+        float3 randomLocation = centerPosition + radius * spawnDirection;
+        
+        LocalTransform SpawnPosition = LocalTransform.FromPosition(randomLocation);
+        
+        return SpawnPosition;
+
     }
 }
