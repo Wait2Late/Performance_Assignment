@@ -8,7 +8,7 @@ public partial class PlayerMovementSystem : SystemBase
     private struct Filter
     {
         public Rigidbody Rigidbody;
-        public InputComponent InputComponent;
+        // public InputComponent InputComponent;
     }
     
     protected override void OnUpdate()
