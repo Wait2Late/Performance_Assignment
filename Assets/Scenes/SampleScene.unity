@@ -412,10 +412,10 @@ MonoBehaviour:
   AutoLoadScene: 1
   _SceneGUID:
     Value:
-      x: 2011270702
-      y: 1280182317
-      z: 254863002
-      w: 3017722661
+      x: 0
+      y: 0
+      z: 0
+      w: 0
 --- !u!4 &1212928945
 Transform:
   m_ObjectHideFlags: 0
