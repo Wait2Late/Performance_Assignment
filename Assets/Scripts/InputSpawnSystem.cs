@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using Unity.Burst;
+using UnityEngine.Rendering;
 
 public partial class InputSpawnSystem : SystemBase
 {
@@ -15,13 +16,14 @@ public partial class InputSpawnSystem : SystemBase
     // private EntityCommandBuffer entityCommandBuffer; //TODO May not need this
     
     //We will use the BeginSimulationEntityCommandBufferSystem for our structural changes
-    // private BeginSimulationEntityCommandBufferSystem m_BeginSimECB;
+    private BeginSimulationEntityCommandBufferSystem m_BeginSimECB;
+    private SystemHandle m_systemHandle;
 
     //This will save our Player prefab to be used to spawn Players
     private Entity m_Prefab;
-
     protected override void OnCreate()
     {
+        m_BeginSimECB.CreateCommandBuffer();
         //This is an EntityQuery for our Players, they must have an PlayerTag
         m_PlayerQuery = GetEntityQuery(ComponentType.ReadWrite<PlayerTag>());
 
@@ -31,10 +33,14 @@ public partial class InputSpawnSystem : SystemBase
         // playerComponent = SystemAPI.GetSingleton<PlayerComponent>(); //TODO if playerComponent
         //This will grab the BeginSimulationEntityCommandBuffer system to be used in OnUpdate
         // m_BeginSimECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //TODO maybe some system changed during updates?
+        m_BeginSimECB.EntityManager.World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //Is this the same thing as above^?
+        m_BeginSimECB.World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+        m_systemHandle = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //TODO Maybe return in SystemHandle?
+
         // m_BeginSimECB = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
         //     .CreateCommandBuffer(); //TODO my attempts to grab something from this class.
     }
-    
+
     protected override void OnUpdate()
     {
         //Here we set the prefab we will use
@@ -54,7 +60,7 @@ public partial class InputSpawnSystem : SystemBase
         shoot = 0;
         var playerCount = m_PlayerQuery.CalculateEntityCountWithoutFiltering();
 
-        Debug.Log("PlayerCount: " + playerCount);
+        Debug.Log("PlayerCount: " + playerCount); //Just to check how many players has spawned
         if (Input.GetKey("space"))
         {
             shoot = 1;
