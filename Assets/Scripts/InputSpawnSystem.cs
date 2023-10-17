@@ -23,7 +23,7 @@ public partial class InputSpawnSystem : SystemBase
     private Entity m_Prefab;
     protected override void OnCreate()
     {
-        m_BeginSimECB.CreateCommandBuffer();
+        // m_BeginSimECB.CreateCommandBuffer();
         //This is an EntityQuery for our Players, they must have an PlayerTag
         m_PlayerQuery = GetEntityQuery(ComponentType.ReadWrite<PlayerTag>());
 
@@ -33,9 +33,9 @@ public partial class InputSpawnSystem : SystemBase
         // playerComponent = SystemAPI.GetSingleton<PlayerComponent>(); //TODO if playerComponent
         //This will grab the BeginSimulationEntityCommandBuffer system to be used in OnUpdate
         // m_BeginSimECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //TODO maybe some system changed during updates?
-        m_BeginSimECB.EntityManager.World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //Is this the same thing as above^?
-        m_BeginSimECB.World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
-        m_systemHandle = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //TODO Maybe return in SystemHandle?
+        // m_BeginSimECB.EntityManager.World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //Is this the same thing as above^?
+        // m_BeginSimECB.World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+        // m_systemHandle = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>(); //TODO Maybe return in SystemHandle?
 
         // m_BeginSimECB = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
         //     .CreateCommandBuffer(); //TODO my attempts to grab something from this class.

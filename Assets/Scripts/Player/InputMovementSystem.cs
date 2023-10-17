@@ -13,54 +13,54 @@ public partial class InputMovementSystem : SystemBase
         //We will use playerForce from the GameSettingsComponent to adjust velocity
         // RequireSingletonForUpdate<GameSettingsComponent>();
     }
-    //
+    
     protected override void OnUpdate()
     {
-        //we must declare our local variables to be able to use them in the .ForEach() below
-        var gameSettings = GetSingleton<GameSettingsComponent>();
-        // var deltaTime = Time.DeltaTime;
-        var deltaTime = SystemAPI.Time.DeltaTime;
-        
-        
-        //we will control thrust with WASD"
-        byte right, left, thrust, reverseThrust;
-        right = left = thrust = reverseThrust = 0;
-        
-        //we will use the mouse to change rotation
-        float mouseX = 0;
-        float mouseY = 0;
-        
-        //we grab "WASD" for thrusting
-        if (Input.GetKey("d"))
-        {
-            right = 1;
-        }
-        if (Input.GetKey("a"))
-        {
-            left = 1;
-        }
-        if (Input.GetKey("w"))
-        {
-            thrust = 1;
-        }
-        if (Input.GetKey("s"))
-        {
-            reverseThrust = 1;
-        }
-        //we will activate rotating with mouse when the right button is clicked
-        if (Input.GetMouseButton(1))
-        {
-            mouseX = Input.GetAxis("Mouse X");
-            mouseY = Input.GetAxis("Mouse Y");
-        
-        }
-
-        Entities
-        .WithAll<PlayerTag>() // Filter entities with the PlayerTag component
-        .ForEach((Entity entity, ref VelocityComponent velocity) => {
-                // Here, 'rotation' variable holds the rotation of the entity with PlayerTag
-                // You can use 'rotation' in this block to access the rotation data.
-        }).ScheduleParallel();
+        // //we must declare our local variables to be able to use them in the .ForEach() below
+        // var gameSettings = GetSingleton<GameSettingsComponent>();
+        // // var deltaTime = Time.DeltaTime;
+        // var deltaTime = SystemAPI.Time.DeltaTime;
+        //
+        //
+        // //we will control thrust with WASD"
+        // byte right, left, thrust, reverseThrust;
+        // right = left = thrust = reverseThrust = 0;
+        //
+        // //we will use the mouse to change rotation
+        // float mouseX = 0;
+        // float mouseY = 0;
+        //
+        // //we grab "WASD" for thrusting
+        // if (Input.GetKey("d"))
+        // {
+        //     right = 1;
+        // }
+        // if (Input.GetKey("a"))
+        // {
+        //     left = 1;
+        // }
+        // if (Input.GetKey("w"))
+        // {
+        //     thrust = 1;
+        // }
+        // if (Input.GetKey("s"))
+        // {
+        //     reverseThrust = 1;
+        // }
+        // //we will activate rotating with mouse when the right button is clicked
+        // if (Input.GetMouseButton(1))
+        // {
+        //     mouseX = Input.GetAxis("Mouse X");
+        //     mouseY = Input.GetAxis("Mouse Y");
+        //
+        // }
+        //
+        // Entities
+        // .WithAll<PlayerTag>() // Filter entities with the PlayerTag component
+        // .ForEach((Entity entity, ref VelocityComponent velocity) => {
+        //         // Here, 'rotation' variable holds the rotation of the entity with PlayerTag
+        //         // You can use 'rotation' in this block to access the rotation data.
+        // }).ScheduleParallel();
         
         // Entities
         // .WithAll<PlayerTag>()
