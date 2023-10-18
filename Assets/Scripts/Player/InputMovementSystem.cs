@@ -40,27 +40,23 @@ partial class InputMovementSystem : SystemBase
         }
         if (Input.GetKey("a"))
         {
-            left = 1;
+            left = 2;
         }
         if (Input.GetKey("w"))
         {
-            thrust = 1;
+            thrust = 3;
         }
         if (Input.GetKey("s"))
         {
-            reverseThrust = 1;
+            reverseThrust = 4;
         }
-        //we will activate rotating with mouse when the right button is clicked
-        if (Input.GetMouseButton(1))
-        {
-            mouseX = Input.GetAxis("Mouse X");
-            mouseY = Input.GetAxis("Mouse Y");
-        
-        }
-        
-        float hInput = Input.GetAxis("Horizontal");
-        float vInput = Input.GetAxis("Vertical");
-        
+        // //we will activate rotating with mouse when the right button is clicked
+        // if (Input.GetMouseButton(1))
+        // {
+        //     mouseX = Input.GetAxis("Mouse X");
+        //     mouseY = Input.GetAxis("Mouse Y");
+        //
+        // }
         
         // Entities
         // .WithAll<PlayerTag>()
@@ -68,7 +64,6 @@ partial class InputMovementSystem : SystemBase
         // {
         //     
         // }).ScheduleParallel();
-        
         
         // Entities
         // .WithAll<PlayerTag>() // Filter entities with the PlayerTag component
@@ -79,36 +74,40 @@ partial class InputMovementSystem : SystemBase
         
         foreach (var player in SystemAPI.Query<PlayerAspect>().WithAll<PlayerTag>())
         {
+            
             if (right == 1)
             {
                 //thrust to the right of where the player is facing
-                player.MoveValue += (math.mul(player.TurnValue, new float3(1, 0, 0))) 
-                                    * player.MoveSpeed * deltaTime;
+                // player.MoveValue += new float3(1, 0, 0).xyz * player.MoveSpeed * deltaTime;
+                // player.MoveValue += new float3(1, 0, 0) * deltaTime;
+                player.MoveTransform.ValueRW.Position += new float3(1, 0, 0) * player.MoveSpeed * deltaTime;
+                // player.MoveTransform.ValueRW.Position += player.MoveValue;
             }
-            
-            if (left == 1)
+            else if (left == 2)
             {
                 //thrust to the left of where the player is facing
-                player.MoveValue += (math.mul(player.TurnValue, new float3(-1, 0, 0))) 
-                                    * player.MoveSpeed * deltaTime;
-                Debug.Log("MoveValue: " + player.MoveValue);
-
+                // player.MoveValue += (math.mul(player.TurnValue, new float3(-1, 0, 0).xyz)) * player.MoveSpeed * deltaTime;
+                // player.MoveValue += new float3(-1, 0, 0) * deltaTime;
+                player.MoveTransform.ValueRW.Position += new float3(-1, 0, 0) * player.MoveSpeed * deltaTime;
+                // player.MoveTransform.ValueRW.Position += player.MoveValue;
             }
-            
-            if (thrust == 1)
+            else if (thrust == 3)
             {
                 //thrust forward of where the player is facing
-                player.MoveValue += (math.mul(player.TurnValue, new float3(0, 0, 1))) 
-                                    * player.MoveSpeed * deltaTime;
+                // player.MoveValue += new float3(0, 0, 1) * deltaTime;
+                player.MoveTransform.ValueRW.Position += new float3(0, 0, 1) * player.MoveSpeed * deltaTime;
+                // player.MoveTransform.ValueRW.Position += player.MoveValue;
             }
-            if (reverseThrust == 1)
+            else if (reverseThrust == 4)
             {
                 //thrust backwards of where the player is facing
-                player.MoveValue += (math.mul(player.TurnValue, new float3(0, 0, -1))) 
-                                    * player.MoveSpeed * deltaTime;
+                // player.MoveValue += new float3(0, 0, -1) * deltaTime;
+                player.MoveTransform.ValueRW.Position += new float3(0, 0, -1) * player.MoveSpeed * deltaTime;
+                // player.MoveTransform.ValueRW.Position += player.MoveValue;
                 
             }
         }
+        Debug.Log("deltaTime: " + deltaTime);
         
         
 
