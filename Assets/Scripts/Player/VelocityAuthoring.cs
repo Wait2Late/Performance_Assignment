@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class VelocityAuthoring : MonoBehaviour
 {
-    public float3 Value;
+    public float3 moveValue;
+    public float3 turnValue;
 }
 
 public class VelocityBaker : Baker<VelocityAuthoring>
@@ -16,7 +17,8 @@ public class VelocityBaker : Baker<VelocityAuthoring>
 
         AddComponent(new VelocityComponent()
         {
-            Value = authoring.Value
+            moveValue = authoring.moveValue,
+            turnValue = authoring.turnValue
         });
     }
 }

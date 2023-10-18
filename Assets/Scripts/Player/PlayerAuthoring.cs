@@ -8,15 +8,25 @@ public class PlayerAuthoring : MonoBehaviour
 {
     public GameObject Prefab;
     private Transform _transform;
+    public float moveSpeed;
 }
 
 public class PlayerBaker : Baker<PlayerAuthoring>
 {
     public override void Bake(PlayerAuthoring authoring)
     {
-        AddComponent(new PlayerComponent()
+        var entity = GetEntity(TransformUsageFlags.Dynamic);
+        
+        AddComponent(entity, new PlayerComponent()
         {
-            Prefab = GetEntity(authoring.Prefab)
+            Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic)
+        });
+        
+        AddComponent(entity, new PlayerTag());
+        
+        AddComponent(entity, new VelocityComponent()
+        {
+            moveSpeed = authoring.moveSpeed
         });
     }
 }

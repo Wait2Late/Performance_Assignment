@@ -43,33 +43,33 @@ public partial class InputSpawnSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        //Here we set the prefab we will use
-        if (m_Prefab == Entity.Null)
-        {
-            //We grab the converted PrefabCollection Entity's PlayerAuthoringComponent
-            //and set m_Prefab to its Prefab value
-            
-            m_Prefab = GetSingleton<PlayerComponent>().Prefab;
-
-            //we must "return" after setting this prefab because if we were to continue into the Job
-            //we would run into errors because the variable was JUST set (ECS funny business)
-            //comment out return and see the error
-            return;
-        }
-        byte shoot;
-        shoot = 0;
-        var playerCount = m_PlayerQuery.CalculateEntityCountWithoutFiltering();
-
-        Debug.Log("PlayerCount: " + playerCount); //Just to check how many players has spawned
-        if (Input.GetKey("space"))
-        {
-            shoot = 1;
-        }
-
-        if (shoot == 1 && playerCount < 1)
-        {
-            EntityManager.Instantiate(m_Prefab);
-            return;
-        }
+        // //Here we set the prefab we will use
+        // if (m_Prefab == Entity.Null)
+        // {
+        //     //We grab the converted PrefabCollection Entity's PlayerAuthoringComponent
+        //     //and set m_Prefab to its Prefab value
+        //     
+        //     m_Prefab = GetSingleton<PlayerComponent>().Prefab;
+        //
+        //     //we must "return" after setting this prefab because if we were to continue into the Job
+        //     //we would run into errors because the variable was JUST set (ECS funny business)
+        //     //comment out return and see the error
+        //     return;
+        // }
+        // byte shoot;
+        // shoot = 0;
+        // var playerCount = m_PlayerQuery.CalculateEntityCountWithoutFiltering();
+        //
+        // Debug.Log("PlayerCount: " + playerCount); //Just to check how many players has spawned
+        // if (Input.GetKey("space"))
+        // {
+        //     shoot = 1;
+        // }
+        //
+        // if (shoot == 1 && playerCount < 1)
+        // {
+        //     EntityManager.Instantiate(m_Prefab);
+        //     return;
+        // }
     }
 }
