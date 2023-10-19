@@ -156,11 +156,3 @@ partial class InputMovementSystem : SystemBase
     }
 }
 
-
-public partial struct MoveJob : IJobEntity
-{
-    public void Execute(PlayerAspect aspect)
-    {
-        
-    }
-}

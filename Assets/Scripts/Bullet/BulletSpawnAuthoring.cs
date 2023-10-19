@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletSpawnAuthoring : MonoBehaviour
 {
     public GameObject Prefab;
+    public Transform spawnPosition;
     public float bulletSpeed;
 }
 
@@ -17,10 +18,9 @@ public class BulletSpawnBaker : Baker<BulletSpawnAuthoring>
         AddComponent(entity, new BulletSpawnComponent()
         {
             Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic)
+            
         });
-        
-        AddComponent(entity, new BulletTag());
-        
+
         AddComponent(entity, new VelocityComponent()
         {
             bulletSpeed = authoring.bulletSpeed

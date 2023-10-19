@@ -7,7 +7,7 @@ public partial class PlayerSpawnerSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-        // EntityQuery playerEntityQuery = EntityManager.CreateEntityQuery(typeof(PlayerTag)); //This one as well
+        // EntityQuerday playerEntityQuery = EntityManager.CreateEntityQuery(typeof(PlayerTag)); //This one as well
         // PlayerSpawnerComponent playerSpawnerComponent = SystemAPI.GetSingleton<PlayerSpawnerComponent>(); // For some reason this need to assign to something otherwise errors?
         //
         // EntityCommandBuffer entityCommandBuffer = 
@@ -20,6 +20,7 @@ public partial class PlayerSpawnerSystem : SystemBase
         //     /* Entity spawnedEntity =*/ entityCommandBuffer.Instantiate(playerSpawnerComponent.playerPrefab);
         //     // entityCommandBuffer.SetComponent();
         //     EntityManager.Instantiate(playerSpawnerComponent.playerPrefab);
+        //     
         // }
 
     }
