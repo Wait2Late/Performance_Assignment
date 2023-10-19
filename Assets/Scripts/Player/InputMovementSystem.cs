@@ -86,31 +86,20 @@ partial class InputMovementSystem : SystemBase
             else if (left == 2)
             {
                 //thrust to the left of where the player is facing
-                // player.MoveValue += (math.mul(player.TurnValue, new float3(-1, 0, 0).xyz)) * player.MoveSpeed * deltaTime;
-                // player.MoveValue += new float3(-1, 0, 0) * deltaTime;
                 player.MoveTransform.ValueRW.Position += new float3(-1, 0, 0) * player.MoveSpeed * deltaTime;
-                // player.MoveTransform.ValueRW.Position += player.MoveValue;
             }
             else if (thrust == 3)
             {
                 //thrust forward of where the player is facing
-                // player.MoveValue += new float3(0, 0, 1) * deltaTime;
                 player.MoveTransform.ValueRW.Position += new float3(0, 0, 1) * player.MoveSpeed * deltaTime;
-                // player.MoveTransform.ValueRW.Position += player.MoveValue;
             }
             else if (reverseThrust == 4)
             {
                 //thrust backwards of where the player is facing
-                // player.MoveValue += new float3(0, 0, -1) * deltaTime;
                 player.MoveTransform.ValueRW.Position += new float3(0, 0, -1) * player.MoveSpeed * deltaTime;
-                // player.MoveTransform.ValueRW.Position += player.MoveValue;
                 
             }
         }
-        Debug.Log("deltaTime: " + deltaTime);
-        
-        
-
         // Entities
         //     .WithAll<PlayerTag>()
         //     .ForEach((Entity entity, ref VelocityComponent inputValue) =>
@@ -163,7 +152,6 @@ partial class InputMovementSystem : SystemBase
         //         //     rotation.Value = newQuaternion;
         //         // }
         //     }).Run();
-
 
     }
 }

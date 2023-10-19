@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerAuthoring : MonoBehaviour
 {
     public GameObject Prefab;
-    private Transform _transform;
     public float moveSpeed;
 }
 
