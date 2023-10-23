@@ -17,13 +17,11 @@ public class BulletSpawnBaker : Baker<BulletSpawnAuthoring>
         
         AddComponent(entity, new BulletSpawnComponent()
         {
-            Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic)
-            
+            Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic),
+            SpawnPosition = authoring.spawnPosition.position,
+            BulletSpeed = authoring.bulletSpeed
         });
 
-        AddComponent(entity, new VelocityComponent()
-        {
-            bulletSpeed = authoring.bulletSpeed
-        });
+
     }
 }

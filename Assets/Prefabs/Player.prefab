@@ -146,6 +146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8211076389433647599}
+  - component: {fileID: 7030253609172582312}
   m_Layer: 0
   m_Name: BulletSpawn
   m_TagString: Untagged
@@ -168,6 +169,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1421000997865653006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7030253609172582312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258392422443530746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2c4ddc763b11f428826e4bad5017ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 9177066622844077397, guid: 36999b07d483ab44fa78f64de5f3f38b, type: 3}
+  spawnPosition: {fileID: 8211076389433647599}
+  bulletSpeed: 5
 --- !u!1 &2185353329686201697
 GameObject:
   m_ObjectHideFlags: 0

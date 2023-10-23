@@ -22,6 +22,5 @@ public partial class PlayerSpawnerSystem : SystemBase
         //     EntityManager.Instantiate(playerSpawnerComponent.playerPrefab);
         //     
         // }
-
     }
 }

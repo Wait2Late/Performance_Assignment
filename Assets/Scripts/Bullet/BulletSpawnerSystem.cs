@@ -2,31 +2,37 @@
 using Unity.Transforms;
 using Unity.Burst;
 using Unity.Mathematics;
+using Unity.Physics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 [BurstCompile]
 public partial struct BulletSpawnerSystem : ISystem
 {
-    public void OnCreate(ref SystemState state){}
+    public void OnCreate(ref SystemState state) { }
     
-    public void OnDestroy(ref SystemState state){}
+    public void OnDestroy(ref SystemState state){ }
     
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        EntityCommandBuffer.ParallelWriter ecb = GetEntityCommandBuffer(ref state);
+        EntityCommandBuffer.ParallelWriter ecb = GetEntityCommandBuffer(ref state); //TODO This might need to be OnUpdate()
 
-        
-        
-        if (Input.GetKey("Space"))
+        foreach (var bullet in SystemAPI.Query<BulletAspect>())
         {
-            
+            if (Input.GetKey(KeyCode.Space))
+            {
+                // bullet.ShootBullet();
+                new ProcessBulletSpawner
+                {
+                    Ecb = ecb
+                }.ScheduleParallel();
+            }
         }
         
         
-        
     }
+
     private EntityCommandBuffer.ParallelWriter GetEntityCommandBuffer(ref SystemState state)
     {
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
@@ -34,17 +40,28 @@ public partial struct BulletSpawnerSystem : ISystem
         return ecb.AsParallelWriter();
     }
     
-    public partial struct ProcessBulletSpawner : IJobEntity
+}
+[BurstCompile]
+public partial struct ProcessBulletSpawner : IJobEntity
+{
+    public EntityCommandBuffer.ParallelWriter Ecb;
+    private PhysicsVelocity velocity;
+
+    private ChunkIndexInQuery _chunkIndexInQuery;
+
+    [BurstCompile]
+    private void Execute(/*[ChunkIndexInQuery] int chunkIndex,*/ BulletSpawnComponent bulletSpawn, BulletAspect bulletAspect)
     {
-        public EntityCommandBuffer.ParallelWriter Ecb;
+        // bulletAspect.ShootBullet(/*chunkIndex,*/ ref bulletSpawn, Ecb);
 
-        private void Execute([ChunkIndexInQuery] int chunkIndex, ref BulletSpawnComponent BulletSpawn)
-        {
-
-            Entity newEntity = Ecb.Instantiate(chunkIndex, BulletSpawn.Prefab);
-            
-            // Ecb.SetComponent(chunkIndex, newEntity, );
-        }
+        // if (Input.GetKey("space"))
+        // {
+        //     Entity newEntity = Ecb.Instantiate(chunkIndex, bulletSpawn.Prefab);
+        //     Ecb.SetComponent(chunkIndex, newEntity, LocalTransform.FromPosition(bulletSpawn.SpawnPosition));
+        //     
+        //     // Calculate initial velocity for the bullets
+        //     float3 direction = math.normalize(LocalTransform.FromPosition(bulletSpawn.SpawnPosition).Position);
+        //     velocity.Linear = direction * bulletSpawn.BulletSpeed;
+        // }
     }
-    
 }
