@@ -58,34 +58,41 @@ partial class InputMovementSystem : SystemBase
         //
         // }
 
-
+        
         
         foreach (var player in SystemAPI.Query<PlayerAspect>().WithAll<PlayerTag>())
         {
-            
-            if (right == 1)
+            foreach (var bullet in SystemAPI.Query<BulletAspect>())
             {
-                //thrust to the right of where the player is facing
-                // player.MoveValue += new float3(1, 0, 0).xyz * player.MoveSpeed * deltaTime;
-                // player.MoveValue += new float3(1, 0, 0) * deltaTime;
-                player.MoveTransform.ValueRW.Position += new float3(1, 0, 0) * player.MoveSpeed * deltaTime;
-                // player.MoveTransform.ValueRW.Position += player.MoveValue;
-            }
-            else if (left == 2)
-            {
-                //thrust to the left of where the player is facing
-                player.MoveTransform.ValueRW.Position += new float3(-1, 0, 0) * player.MoveSpeed * deltaTime;
-            }
-            else if (thrust == 3)
-            {
-                //thrust forward of where the player is facing
-                player.MoveTransform.ValueRW.Position += new float3(0, 0, 1) * player.MoveSpeed * deltaTime;
-            }
-            else if (reverseThrust == 4)
-            {
-                //thrust backwards of where the player is facing
-                player.MoveTransform.ValueRW.Position += new float3(0, 0, -1) * player.MoveSpeed * deltaTime;
-                
+                if (right == 1)
+                {
+                    //thrust to the right of where the player is facing
+                    // player.MoveValue += new float3(1, 0, 0).xyz * player.MoveSpeed * deltaTime;
+                    // player.MoveValue += new float3(1, 0, 0) * deltaTime;
+                    player.MoveTransform.ValueRW.Position += new float3(1, 0, 0) * player.MoveSpeed * deltaTime;
+                    // player.MoveTransform.ValueRW.Position += player.MoveValue;
+                    bullet.SpawnPositon = player.MoveTransform.ValueRW.Position;
+                }
+                else if (left == 2)
+                {
+                    //thrust to the left of where the player is facing
+                    player.MoveTransform.ValueRW.Position += new float3(-1, 0, 0) * player.MoveSpeed * deltaTime;
+                    bullet.SpawnPositon = player.MoveTransform.ValueRW.Position;
+                }
+                else if (thrust == 3)
+                {
+                    //thrust forward of where the player is facing
+                    player.MoveTransform.ValueRW.Position += new float3(0, 0, 1) * player.MoveSpeed * deltaTime;
+                    bullet.SpawnPositon = player.MoveTransform.ValueRW.Position;
+                }
+                else if (reverseThrust == 4)
+                {
+                    //thrust backwards of where the player is facing
+                    player.MoveTransform.ValueRW.Position += new float3(0, 0, -1) * player.MoveSpeed * deltaTime;
+
+                    bullet.SpawnPositon = player.MoveTransform.ValueRW.Position;
+
+                }
             }
         }
 

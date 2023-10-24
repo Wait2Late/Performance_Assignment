@@ -8,8 +8,19 @@ public readonly partial struct BulletAspect : IAspect
 {
     public readonly Entity entity;
 
+    // private readonly LocalTransform LocalTransform;
+
     private readonly RefRW<BulletSpawnComponent> bullet;
+    
     public float BulletSpeed => bullet.ValueRO.BulletSpeed;
+
+    public float3 SpawnPositon
+    {
+        get => bullet.ValueRO.SpawnPosition;
+        set => bullet.ValueRW.SpawnPosition = value;
+    }
+    
+    
 
     // public void ShootBullet(/*[ChunkIndexInQuery] int ChunkIndex,*/ ref BulletSpawnComponent BulletSpawn, EntityCommandBuffer.ParallelWriter ecb)
     // {
@@ -21,4 +32,5 @@ public readonly partial struct BulletAspect : IAspect
     //     float3 direction = math.normalize(LocalTransform.FromPosition(BulletSpawn.SpawnPosition).Position);
     //     velocity.Linear = direction * BulletSpawn.BulletSpeed;
     // }
+
 }
