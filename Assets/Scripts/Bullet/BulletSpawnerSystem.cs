@@ -3,6 +3,8 @@ using Unity.Transforms;
 using Unity.Burst;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Extensions;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +12,8 @@ using Random = UnityEngine.Random;
 [UpdateInGroup(typeof(InitializationSystemGroup))]
 public partial struct BulletSpawnerSystem : ISystem
 {
+    
+    
     [BurstCompile]
 
     public void OnCreate(ref SystemState state)
@@ -23,40 +27,30 @@ public partial struct BulletSpawnerSystem : ISystem
     
     public void OnUpdate(ref SystemState state)
     {
-        // EntityCommandBuffer.ParallelWriter ecb = GetEntityCommandBuffer(ref state); //TODO This might need to be OnUpdate()
+        EntityCommandBuffer.ParallelWriter ecb = GetEntityCommandBuffer(ref state); //TODO This might need to be OnUpdate()
 
-        // foreach (var bullet in SystemAPI.Query<BulletAspect>())
-        // {
-        //     if (Input.GetKey(KeyCode.Space))
-        //     {
-        //         // bullet.ShootBullet();
-        //         new ProcessBulletSpawner
-        //         {
-        //             Ecb = ecb
-        //         }.ScheduleParallel();
-        //
-        //         state.Enabled = false;
-        //     }
-        // }
-        // foreach (var bulletAspect in SystemAPI.Query<BulletAspect>().WithAll<BulletTag>())
-        // {
-        //     ShootBulletAspect(ref state, bulletAspect);
-        // }
-
-        foreach (var bulletSpawn in SystemAPI.Query<RefRW<BulletSpawnComponent>>())
+        if (Input.GetKey(KeyCode.Space))
         {
-            ShootBullet(ref state, bulletSpawn);
+            new ProcessBulletSpawner
+            {
+                Ecb = ecb
+            }.ScheduleParallel();
         }
+
+
+        // foreach (var bulletSpawn in SystemAPI.Query<RefRW<BulletSpawnComponent>>()) //TODO This one does work kinda?
+        // {
+        //     ShootBullet(ref state, bulletSpawn);
+        // }
         
         
     }
-    
     private void ShootBullet(ref SystemState state, RefRW<BulletSpawnComponent> bulletSpawn)
     {
-        
         if (Input.GetKey(KeyCode.Space))
         {
-            Entity newEntity = state.EntityManager.Instantiate(bulletSpawn.ValueRO.Prefab);
+            Entity bulletEntity = bulletSpawn.ValueRO.Prefab;
+            Entity newEntity = state.EntityManager.Instantiate(bulletEntity);
 
             // quaternion rotation = state.EntityManager.GetComponentData<LocalToWorld>(newEntity).Rotation;
             //
@@ -77,61 +71,37 @@ public partial struct BulletSpawnerSystem : ISystem
             // });
             //
             // state.EntityManager.AddComponentData(newEntity, new PhysicsVelocity { Linear = initialVelocity });
-            
             state.EntityManager.SetComponentData(
-                newEntity, LocalTransform.FromPosition(bulletSpawn.ValueRO.SpawnPosition)); //TODO Keep this as it spawns on the original position
-            
-            // state.EntityManager.DestroyEntity(newEntity);
+                newEntity, LocalTransform.FromPosition(
+                    bulletSpawn.ValueRO.SpawnPosition)); //TODO Keep this as it spawns on the original position
             
         }
     }
-    
-    // private void ShootBulletAspect(ref SystemState state, BulletAspect bulletAspect)
-    // {
-    //     if (Input.GetKey(KeyCode.Space))
-    //     {
-    //         PhysicsVelocity velocity;
-    //         Entity newEntity = state.EntityManager.Instantiate(bulletAspect.entity);
-    //         
-    //         state.EntityManager.SetComponentData(newEntity, 
-    //             LocalTransform.FromPosition(bulletAspect.SpawnPositon));
-    //         
-    //         float3 direction = math.normalize(LocalTransform.FromPosition(bulletAspect.SpawnPositon).Position);
-    //         velocity.Linear = direction * bulletAspect.BulletSpeed;
-    //     }
-    // }
-    
-    // private EntityCommandBuffer.ParallelWriter GetEntityCommandBuffer(ref SystemState state)
-    // {
-    //     var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-    //     var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged); 
-    //     return ecb.AsParallelWriter();
-    // }
-    
-    
+    private EntityCommandBuffer.ParallelWriter GetEntityCommandBuffer(ref SystemState state)
+    {
+        var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+        var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged); 
+        return ecb.AsParallelWriter();
+    }
     
 }
 
 
-// [BurstCompile]
-// public partial struct ProcessBulletSpawner : IJobEntity
-// {
-//     public EntityCommandBuffer.ParallelWriter Ecb;
-//     private PhysicsVelocity velocity;
-//
-//     [BurstCompile]
-//     private void Execute([ChunkIndexInQuery] int chunkIndex, BulletSpawnComponent bulletSpawn, BulletAspect bulletAspect)
-//     {
-//         // bulletAspect.ShootBullet(/*chunkIndex,*/ ref bulletSpawn, Ecb);
-//
-//         // if (Input.GetKey("space"))
-//         // {
-//         //     Entity newEntity = Ecb.Instantiate(chunkIndex, bulletSpawn.Prefab);
-//         //     Ecb.SetComponent(chunkIndex, newEntity, LocalTransform.FromPosition(bulletSpawn.SpawnPosition));
-//         //     
-//         //     // Calculate initial velocity for the bullets
-//         //     float3 direction = math.normalize(LocalTransform.FromPosition(bulletSpawn.SpawnPosition).Position);
-//         //     velocity.Linear = direction * bulletSpawn.BulletSpeed;
-//         // }
-//     }
-// }
+[BurstCompile]
+public partial struct ProcessBulletSpawner : IJobEntity
+{
+    public EntityCommandBuffer.ParallelWriter Ecb;
+    private PhysicsVelocity velocity;
+
+    [BurstCompile]
+    private void Execute([ChunkIndexInQuery] int chunkIndex, ref BulletSpawnComponent bulletSpawn/*, ref BulletAspect bulletAspect*/)
+    {
+        Entity newEntity = Ecb.Instantiate(chunkIndex, bulletSpawn.Prefab);
+        Ecb.SetComponent(chunkIndex, newEntity, LocalTransform.FromPosition(bulletSpawn.SpawnPosition));
+        
+        
+        // Calculate initial velocity for the bullets
+        // float3 direction = math.normalize(LocalTransform.FromPosition(bulletSpawn.SpawnPosition).Position);
+        // velocity.Linear = direction * bulletSpawn.BulletSpeed;
+    }
+}
