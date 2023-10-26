@@ -59,6 +59,12 @@ partial class InputMovementSystem : SystemBase
         // }
 
         
+        // foreach (var shoot in SystemAPI.Query<BulletShootAspect>().WithAll<BulletTag>())
+        // {
+        //     shoot.MovePosition += math.forward() * 1 * deltaTime;
+        //     // shoot.ShootProjectile(deltaTime);
+        // }
+        
         
         foreach (var player in SystemAPI.Query<PlayerAspect>().WithAll<PlayerTag>())
         {
