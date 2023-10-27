@@ -1,8 +1,10 @@
 ﻿
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [BurstCompile]
 public partial struct EnemySpawnSystem : ISystem
@@ -17,12 +19,15 @@ public partial struct EnemySpawnSystem : ISystem
     {
         EntityCommandBuffer.ParallelWriter ecb = GetEntityCommandBuffer(ref state); //TODO This might need to be OnUpdate()
         float deltaTime = SystemAPI.Time.DeltaTime;
-
+        float randomAngle = Random.Range(0, 360);
+        float randomRadius = Random.Range(10, 25);
         if (Input.GetKey(KeyCode.Q))
         {
             new ProcessEnemySpawn()
             {
                 Ecb = ecb,
+                RandomAngle = randomAngle,
+                RandomRadius = randomRadius,
                 DeltaTime = deltaTime
             }.ScheduleParallel();
         }
@@ -40,15 +45,17 @@ public partial struct EnemySpawnSystem : ISystem
 public partial struct ProcessEnemySpawn : IJobEntity
 {
     public EntityCommandBuffer.ParallelWriter Ecb;
+    public float RandomAngle;
+    public float RandomRadius;
     public float DeltaTime;
     
     [BurstCompile]
     private void Execute([ChunkIndexInQuery] int indexKey, EnemySpawnAspect enemy)
     {
-        enemy.SpawnRandomPosition();
+        float3 randomSpawnPositions = enemy.SpawnRandomPosition(RandomAngle, RandomRadius);
 
         Entity enemyEntity = Ecb.Instantiate(indexKey, enemy.EnemyPrefab);
-        Ecb.SetComponent(indexKey, enemyEntity, LocalTransform.FromPosition(enemy.SpawnPosition));
+        Ecb.SetComponent(indexKey, enemyEntity, LocalTransform.FromPosition(randomSpawnPositions));
         
         
     }
