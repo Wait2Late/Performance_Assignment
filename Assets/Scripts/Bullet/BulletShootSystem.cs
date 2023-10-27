@@ -3,7 +3,6 @@ using Unity.Entities;
 using UnityEngine;
 
 [BurstCompile]
-[UpdateAfter(typeof(BulletSpawnerSystem))]
 public partial struct BulletShootSystem : ISystem
 {
     
