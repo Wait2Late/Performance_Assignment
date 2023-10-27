@@ -1,9 +1,7 @@
-﻿using Unity.Entities;
-using Unity.Mathematics;
+﻿
+using Unity.Entities;
 
 public partial struct EnemyComponent : IComponentData
 {
-    public Entity Prefab;
-    public float3 SpawnPosition;
-    
+    public float speedValue;
 }

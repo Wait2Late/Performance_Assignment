@@ -1,20 +1,12 @@
-﻿
-using Unity.Entities;
-using Unity.Mathematics;
+﻿using Unity.Entities;
+using UnityEditor.Search;
 
-public struct EnemyAspect
+public readonly partial struct EnemyAspect : IAspect
 {
     public readonly Entity Entity;
 
     private readonly RefRW<EnemyComponent> enemy;
 
-    public Entity EnemyPrefab => enemy.ValueRO.Prefab;
+    public float EnemySpeed => enemy.ValueRO.speedValue;
 
-    public float3 SpawnPosition
-    {
-        get => enemy.ValueRO.SpawnPosition;
-        set => enemy.ValueRW.SpawnPosition = value;
-    }
-    
-    
 }
