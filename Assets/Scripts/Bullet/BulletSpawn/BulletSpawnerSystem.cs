@@ -58,13 +58,6 @@ public partial struct ProcessBulletSpawner : IJobEntity
     {
         Entity bulletEntity = Ecb.Instantiate(chunkIndex, bulletAspect.BulletPrefab);        
         Ecb.SetComponent(chunkIndex, bulletEntity, LocalTransform.FromPosition(bulletAspect.SpawnPositon));
-        
-        // Ecb.SetEnabled(chunkIndex, bulletEntity, false);
-        // bulletAspect.ShootProjectile(DeltaTime);
-                
-        
-
-     
     }
 }
 
