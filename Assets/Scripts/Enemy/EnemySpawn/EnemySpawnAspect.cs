@@ -24,9 +24,12 @@ public readonly partial struct EnemySpawnAspect : IAspect
         float3 spawnDirection = Quaternion.Euler(0, randomAngle, 0) * math.forward();
         // float radius = 25.0f;
     
-        float3 randomLocations = randomRadius * spawnDirection;
-        SpawnPosition = randomLocations; //TODO It spawns I think in the center. It needs to be fixed
-    
+        float3 randomLocations = SpawnPosition + randomRadius * spawnDirection;
+        return randomLocations;
+    }
+
+    public float3 SpawnOnThisPosition()
+    {
         return SpawnPosition;
     }
 }

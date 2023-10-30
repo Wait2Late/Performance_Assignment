@@ -52,6 +52,7 @@ public partial struct ProcessEnemySpawn : IJobEntity
     [BurstCompile]
     private void Execute([ChunkIndexInQuery] int indexKey, EnemySpawnAspect enemy)
     {
+        
         float3 randomSpawnPositions = enemy.SpawnRandomPosition(RandomAngle, RandomRadius);
 
         Entity enemyEntity = Ecb.Instantiate(indexKey, enemy.EnemyPrefab);
