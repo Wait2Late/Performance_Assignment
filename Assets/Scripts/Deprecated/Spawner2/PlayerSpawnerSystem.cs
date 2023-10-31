@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public partial class PlayerSpawnerSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-        // EntityQuerday playerEntityQuery = EntityManager.CreateEntityQuery(typeof(PlayerTag)); //This one as well
+        // EntityQuery playerEntityQuery = EntityManager.CreateEntityQuery(typeof(PlayerTag)); //This one as well
         // PlayerSpawnerComponent playerSpawnerComponent = SystemAPI.GetSingleton<PlayerSpawnerComponent>(); // For some reason this need to assign to something otherwise errors?
         //
         // EntityCommandBuffer entityCommandBuffer = 
@@ -22,5 +23,6 @@ public partial class PlayerSpawnerSystem : SystemBase
         //     EntityManager.Instantiate(playerSpawnerComponent.playerPrefab);
         //     
         // }
+
     }
 }

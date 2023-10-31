@@ -61,10 +61,4 @@ public partial struct ProcessBulletSpawner : IJobEntity
     }
 }
 
-public struct CollisionJob : ICollisionEventsJob
-{
-    public void Execute(CollisionEvent collisionEvent)
-    {
-        
-    }
-}
+

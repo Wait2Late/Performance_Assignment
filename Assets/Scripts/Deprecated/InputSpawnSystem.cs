@@ -10,22 +10,22 @@ using UnityEngine.Rendering;
 public partial class InputSpawnSystem : SystemBase
 {
     //This will be our query for Players
-    private EntityQuery m_PlayerQuery;
+    // private EntityQuery m_PlayerQuery;
 
     // private PlayerComponent playerComponent; //TODO May not need this
     // private EntityCommandBuffer entityCommandBuffer; //TODO May not need this
     
     //We will use the BeginSimulationEntityCommandBufferSystem for our structural changes
-    private BeginSimulationEntityCommandBufferSystem m_BeginSimECB;
-    private SystemHandle m_systemHandle;
-
-    //This will save our Player prefab to be used to spawn Players
-    private Entity m_Prefab;
+    // private BeginSimulationEntityCommandBufferSystem m_BeginSimECB;
+    // private SystemHandle m_systemHandle;
+    //
+    // //This will save our Player prefab to be used to spawn Players
+    // private Entity m_Prefab;
     protected override void OnCreate()
     {
         // m_BeginSimECB.CreateCommandBuffer();
         //This is an EntityQuery for our Players, they must have an PlayerTag
-        m_PlayerQuery = GetEntityQuery(ComponentType.ReadWrite<PlayerTag>());
+        // m_PlayerQuery = GetEntityQuery(ComponentType.ReadWrite<PlayerTag>());
 
         // entityCommandBuffer = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
         //     .CreateCommandBuffer(World.Unmanaged); //TODO Maybe change some of the code with this?

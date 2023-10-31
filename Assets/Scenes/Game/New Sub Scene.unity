@@ -339,7 +339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2646490083021916158, guid: 0c3504c14329083448075bad4db5c255, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 41.9
+      value: 45.4
       objectReference: {fileID: 0}
     - target: {fileID: 2646490083021916158, guid: 0c3504c14329083448075bad4db5c255, type: 3}
       propertyPath: m_LocalRotation.w
@@ -373,6 +373,18 @@ PrefabInstance:
       propertyPath: Prefab
       value: 
       objectReference: {fileID: 1674904826622830757, guid: dad83e160bd950b4db7f52eda26308df, type: 3}
+    - target: {fileID: 5952849538995160482, guid: 0c3504c14329083448075bad4db5c255, type: 3}
+      propertyPath: maxRadius
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5952849538995160482, guid: 0c3504c14329083448075bad4db5c255, type: 3}
+      propertyPath: countDownTimer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5952849538995160482, guid: 0c3504c14329083448075bad4db5c255, type: 3}
+      propertyPath: maxEnemiesAmount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8879888503952084722, guid: 0c3504c14329083448075bad4db5c255, type: 3}
       propertyPath: m_Icon
       value: 

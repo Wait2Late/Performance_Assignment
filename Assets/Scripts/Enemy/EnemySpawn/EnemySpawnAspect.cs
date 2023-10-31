@@ -18,12 +18,16 @@ public readonly partial struct EnemySpawnAspect : IAspect
         set => enemy.ValueRW.SpawnPosition = value;
     }
 
+    public float MaxRadius => enemy.ValueRO.MaxRadius;
+    
+    public float CountDownTimer => enemy.ValueRO.CountDownTimer;
+
+    public int MaxEnemiesAmount => enemy.ValueRO.MaxEnemiesAmount;
+
+
     public float3 SpawnRandomPosition(float randomAngle, float randomRadius)
     {
-        // float randomAngle = Random.Range(0f, 360f);
         float3 spawnDirection = Quaternion.Euler(0, randomAngle, 0) * math.forward();
-        // float radius = 25.0f;
-    
         float3 randomLocations = SpawnPosition + randomRadius * spawnDirection;
         return randomLocations;
     }
