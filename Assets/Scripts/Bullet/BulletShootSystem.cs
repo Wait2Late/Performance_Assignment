@@ -1,23 +1,19 @@
-﻿using Unity.Burst;
-using Unity.Collections;
+﻿// using Unity.Burst;
 using Unity.Entities;
-using Unity.Physics;
-using Unity.Physics.Systems;
-using UnityEngine;
 
-[BurstCompile]
+// [BurstCompile]
 public partial struct BulletShootSystem : ISystem
 {
 
-    [BurstCompile]
+    // [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         // state.RequireForUpdate<SimulationSingleton>();
     }
-    [BurstCompile]
+    // [BurstCompile]
     public void OnDestroy(ref SystemState state){}
     
-    [BurstCompile]
+    // [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         float deltaTime = SystemAPI.Time.DeltaTime;
@@ -32,12 +28,12 @@ public partial struct BulletShootSystem : ISystem
 
     }
 }
-[BurstCompile]
+// [BurstCompile]
 public partial struct ProcessProjectile : IJobEntity
 {
     public float DeltaTime;
 
-    [BurstCompile]
+    // [BurstCompile]
     private void Execute(BulletShootAspect bullet)
     {
         bullet.ShootProjectile(DeltaTime);

@@ -1,20 +1,20 @@
 ﻿
-using Unity.Burst;
+// using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[BurstCompile]
+// [BurstCompile]
 public partial struct EnemyBehaviourSystem : ISystem
 {
-    [BurstCompile]
+    // [BurstCompile]
     public void OnCreate(ref SystemState state) { }
-    [BurstCompile]
+    // [BurstCompile]
     public void OnDestroy(ref SystemState state){}
 
     
-    [BurstCompile]
+    // [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         float deltaTime = SystemAPI.Time.DeltaTime;
@@ -27,13 +27,13 @@ public partial struct EnemyBehaviourSystem : ISystem
 
     }
 
-    [BurstCompile]
+    // [BurstCompile]
     public partial struct ProcessEnemyMovement : IJobEntity
     {
         public float DeltaTime;
         public float3 OnUnitSphere;
 
-        [BurstCompile]
+        // [BurstCompile]
         private void Execute(EnemyAspect enemy)
         {
             enemy.MoveRandomDirections(DeltaTime, OnUnitSphere);

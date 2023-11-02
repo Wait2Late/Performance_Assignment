@@ -1,8 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEditor.Search;
-using Random = UnityEngine.Random;
 
 public readonly partial struct EnemyAspect : IAspect
 {

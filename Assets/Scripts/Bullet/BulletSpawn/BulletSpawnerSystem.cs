@@ -1,21 +1,18 @@
 ﻿using Unity.Entities;
 using Unity.Transforms;
-using Unity.Burst;
-using Unity.Mathematics;
-using Unity.Physics;
+// using Unity.Burst;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-[BurstCompile]
+// [BurstCompile]
 [UpdateInGroup(typeof(InitializationSystemGroup))]
 public partial struct BulletSpawnerSystem : ISystem
 {
-    [BurstCompile]
+    // [BurstCompile]
     public void OnCreate(ref SystemState state) { }
 
-    [BurstCompile]
+    // [BurstCompile]
     public void OnDestroy(ref SystemState state){ }
-    [BurstCompile]
+    // [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         // state.Dependency = new CollisionJob().Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
@@ -46,14 +43,14 @@ public partial struct BulletSpawnerSystem : ISystem
     
 }
 
-[BurstCompile]
+// [BurstCompile]
 public partial struct ProcessBulletSpawner : IJobEntity
 {
     
     public EntityCommandBuffer.ParallelWriter Ecb;
     public float DeltaTime;
     
-    [BurstCompile]
+    // [BurstCompile]
     private void Execute([ChunkIndexInQuery] int chunkIndex, BulletAspect bulletAspect)
     {
         Entity bulletEntity = Ecb.Instantiate(chunkIndex, bulletAspect.BulletPrefab);        

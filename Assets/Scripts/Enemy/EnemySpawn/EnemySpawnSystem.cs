@@ -1,25 +1,22 @@
-﻿using Unity.Burst;
-using Unity.Collections;
+﻿// using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Physics;
 using Unity.Transforms;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-[BurstCompile]
+// [BurstCompile]
 public partial struct EnemySpawnSystem : ISystem
 {
-    [BurstCompile]
+    // [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         // state.RequireForUpdate<SimulationSingleton>();
     }
-    [BurstCompile]
+    // [BurstCompile]
     public void OnDestroy(ref SystemState state){}
 
-    [BurstCompile]
+    // [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         EntityCommandBuffer.ParallelWriter ecb = GetEntityCommandBuffer(ref state); //TODO This might need to be OnUpdate()
@@ -64,7 +61,7 @@ public partial struct EnemySpawnSystem : ISystem
     }
 }
 
-[BurstCompile]
+// [BurstCompile]
 public partial struct ProcessEnemySpawn : IJobEntity
 {
     public EntityCommandBuffer.ParallelWriter Ecb;
@@ -74,7 +71,7 @@ public partial struct ProcessEnemySpawn : IJobEntity
     // public float Seconds;
     // public double ElapsedTime;
     
-    [BurstCompile]
+    // [BurstCompile]
     private void Execute([ChunkIndexInQuery] int indexKey, EnemySpawnAspect enemy)
     {
         Entity enemyEntity = Ecb.Instantiate(indexKey, enemy.EnemyPrefab);

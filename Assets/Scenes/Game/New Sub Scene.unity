@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3332416492014515279, guid: 0346db0cbd02bb549bfc6036bff300a9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.06
+      value: -25.300003
       objectReference: {fileID: 0}
     - target: {fileID: 3332416492014515279, guid: 0346db0cbd02bb549bfc6036bff300a9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -273,7 +273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5952849538995160482, guid: 0c3504c14329083448075bad4db5c255, type: 3}
       propertyPath: countDownTimer
-      value: 30
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5952849538995160482, guid: 0c3504c14329083448075bad4db5c255, type: 3}
       propertyPath: maxEnemiesAmount
@@ -296,6 +296,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 937221979}
   - {fileID: 348961594}
+  - {fileID: 937221979}
   - {fileID: 1240969046310243472}
