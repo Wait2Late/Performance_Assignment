@@ -273,7 +273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5952849538995160482, guid: 0c3504c14329083448075bad4db5c255, type: 3}
       propertyPath: countDownTimer
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5952849538995160482, guid: 0c3504c14329083448075bad4db5c255, type: 3}
       propertyPath: maxEnemiesAmount

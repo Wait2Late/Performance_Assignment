@@ -14,7 +14,7 @@ public partial struct EnemySpawnSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<SimulationSingleton>();
+        // state.RequireForUpdate<SimulationSingleton>();
     }
     [BurstCompile]
     public void OnDestroy(ref SystemState state){}
@@ -25,19 +25,21 @@ public partial struct EnemySpawnSystem : ISystem
         EntityCommandBuffer.ParallelWriter ecb = GetEntityCommandBuffer(ref state); //TODO This might need to be OnUpdate()
         float deltaTime = SystemAPI.Time.DeltaTime;
 
-        state.Dependency = new EnemyCollisionJob().Schedule(SystemAPI.GetSingleton<SimulationSingleton>()
-            ,state.Dependency);
+        // state.Dependency = new EnemyCollisionJob().Schedule(SystemAPI.GetSingleton<SimulationSingleton>()
+        //     ,state.Dependency);
 
         Entity enemyEntity = SystemAPI.GetSingletonEntity<EnemySpawnComponent>();
         EnemySpawnAspect enemyAspect = SystemAPI.GetAspect<EnemySpawnAspect>(enemyEntity);
 
+        float countDownTimer = enemyAspect.CountDownTimer;
+        double elapsedTime = SystemAPI.Time.ElapsedTime;
+
         
-        float maxRadius = enemyAspect.MaxRadius;
+        // float maxRadius = enemyAspect.MaxRadius;
+        float maxRadius = (float)elapsedTime * 3f;
         float randomRadius = Random.Range(0, maxRadius);
         float randomAngle = Random.Range(0, 360);
 
-        float countDownTimer = enemyAspect.CountDownTimer;
-        double elapsedTime = SystemAPI.Time.ElapsedTime;
         
         if (elapsedTime <= countDownTimer)
         {
@@ -81,74 +83,74 @@ public partial struct ProcessEnemySpawn : IJobEntity
     }
 }
 
-public partial struct EnemyCollisionJob : ICollisionEventsJob
-{
-    public void Execute(CollisionEvent collisionEvent)
-    {
-        Debug.Log($"A:  {collisionEvent.EntityA}, B: {collisionEvent.EntityB}");
-    }
-}
-
-public struct Touch : IComponentData { }
-
-public readonly struct Touched : IComponentData
-{
-    public readonly Entity Who;
-    public readonly float3 Normal;
-
-    public Touched(Entity who, float3 normal)
-    {
-        Who = who;
-        Normal = normal;
-    }
-}
-
-public partial struct TouchSystem : ISystem
-{
-    public void OnCreate(ref SystemState state)
-    {
-        state.RequireForUpdate<SimulationSingleton>();
-        state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
-    }
-    
-    public void OnDestroy(ref SystemState state) {}
-
-    public void OnUpdate(ref SystemState state)
-    {
-        state.Dependency = new CollisionJob()
-        {
-            TouchLookup = SystemAPI.GetComponentLookup<Touch>(),
-            PhysicsVelocityLookUp = SystemAPI.GetComponentLookup<PhysicsVelocity>(),
-            Buffer = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
-                .CreateCommandBuffer(state.WorldUnmanaged)
-            
-        }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-    }
-
-    private struct CollisionJob : ICollisionEventsJob
-    {
-        public ComponentLookup<Touch> TouchLookup;
-        public ComponentLookup<PhysicsVelocity> PhysicsVelocityLookUp;
-
-        public EntityCommandBuffer Buffer;
-
-        private bool IsDynamic(Entity entity) => PhysicsVelocityLookUp.HasComponent(entity);
-        
-        private bool IsTouchable(Entity entity) => TouchLookup.HasComponent(entity);
-        
-        public void Execute(CollisionEvent collisionEvent)
-        {
-            var A = collisionEvent.EntityA;
-            var B = collisionEvent.EntityB;
-
-            if (IsTouchable(A) && IsDynamic(B))
-            {
-                Buffer.AddComponent(A, new Touched(B, collisionEvent.Normal));
-            }
-            else if (IsTouchable(B) && IsDynamic(A))
-            {
-                Buffer.AddComponent(B, new Touched(A, collisionEvent.Normal));
-            }
-        }
-    }
-}
+// public partial struct EnemyCollisionJob : ICollisionEventsJob
+// {
+//     public void Execute(CollisionEvent collisionEvent)
+//     {
+//         Debug.Log($"A:  {collisionEvent.EntityA}, B: {collisionEvent.EntityB}");
+//     }
+// }
+//
+// public struct Touch : IComponentData { }
+//
+// public readonly struct Touched : IComponentData
+// {
+//     public readonly Entity Who;
+//     public readonly float3 Normal;
+//
+//     public Touched(Entity who, float3 normal)
+//     {
+//         Who = who;
+//         Normal = normal;
+//     }
+// }
+//
+// public partial struct TouchSystem : ISystem
+// {
+//     public void OnCreate(ref SystemState state)
+//     {
+//         state.RequireForUpdate<SimulationSingleton>();
+//         state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
+//     }
+//     
+//     public void OnDestroy(ref SystemState state) {}
+//
+//     public void OnUpdate(ref SystemState state)
+//     {
+//         state.Dependency = new CollisionJob()
+//         {
+//             TouchLookup = SystemAPI.GetComponentLookup<Touch>(),
+//             PhysicsVelocityLookUp = SystemAPI.GetComponentLookup<PhysicsVelocity>(),
+//             Buffer = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
+//                 .CreateCommandBuffer(state.WorldUnmanaged)
+//             
+//         }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
+//     }
+//
+//     private struct CollisionJob : ICollisionEventsJob
+//     {
+//         public ComponentLookup<Touch> TouchLookup;
+//         public ComponentLookup<PhysicsVelocity> PhysicsVelocityLookUp;
+//
+//         public EntityCommandBuffer Buffer;
+//
+//         private bool IsDynamic(Entity entity) => PhysicsVelocityLookUp.HasComponent(entity);
+//         
+//         private bool IsTouchable(Entity entity) => TouchLookup.HasComponent(entity);
+//         
+//         public void Execute(CollisionEvent collisionEvent)
+//         {
+//             var A = collisionEvent.EntityA;
+//             var B = collisionEvent.EntityB;
+//
+//             if (IsTouchable(A) && IsDynamic(B))
+//             {
+//                 Buffer.AddComponent(A, new Touched(B, collisionEvent.Normal));
+//             }
+//             else if (IsTouchable(B) && IsDynamic(A))
+//             {
+//                 Buffer.AddComponent(B, new Touched(A, collisionEvent.Normal));
+//             }
+//         }
+//     }
+// }

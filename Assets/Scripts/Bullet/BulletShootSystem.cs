@@ -12,7 +12,7 @@ public partial struct BulletShootSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<SimulationSingleton>();
+        // state.RequireForUpdate<SimulationSingleton>();
     }
     [BurstCompile]
     public void OnDestroy(ref SystemState state){}

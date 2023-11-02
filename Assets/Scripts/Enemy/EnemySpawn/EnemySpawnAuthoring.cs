@@ -6,8 +6,8 @@ public class EnemySpawnAuthoring : MonoBehaviour
     public GameObject Prefab;
     public Transform spawnTransform;
     public float maxRadius;
+    // public int maxEnemiesAmount;
     public float countDownTimer;
-    public int maxEnemiesAmount;
 }
 
 public class EnemySpawnBaker : Baker<EnemySpawnAuthoring>
@@ -21,7 +21,7 @@ public class EnemySpawnBaker : Baker<EnemySpawnAuthoring>
             Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic),
             SpawnPosition = authoring.spawnTransform.position,
             MaxRadius = authoring.maxRadius,
-            MaxEnemiesAmount = authoring.maxEnemiesAmount,
+            // MaxEnemiesAmount = authoring.maxEnemiesAmount,
             CountDownTimer = authoring.countDownTimer
         });
     }

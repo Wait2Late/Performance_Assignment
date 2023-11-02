@@ -22,7 +22,7 @@ public readonly partial struct EnemySpawnAspect : IAspect
     
     public float CountDownTimer => enemy.ValueRO.CountDownTimer;
 
-    public int MaxEnemiesAmount => enemy.ValueRO.MaxEnemiesAmount;
+    // public int MaxEnemiesAmount => enemy.ValueRO.MaxEnemiesAmount;
 
 
     public float3 SpawnRandomPosition(float randomAngle, float randomRadius)
