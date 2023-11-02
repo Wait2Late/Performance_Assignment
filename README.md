@@ -1,10 +1,13 @@
 # Performance_Assignment
 Assignment for Computer Technology Course
 
-**Controls:
-WASD keys to control the player.
-Space to shoot.
-ESC to quit.**
+**Controls:**
+
+**WASD keys to control the player.**
+
+**Space to shoot.**
+
+**ESC to quit.**
 
 In my attempt to create the packaged build with Burst Compiler in my system and jobs, I encountered challenges. Despite this, the game is still capable of handling a large number of entities and moving around without causing any lag.
 
